@@ -55,7 +55,6 @@ router.post("/add", auth, (req, res, next) => {
             }).catch(error=>{
                 next(new Error(error))
             })
-        
     // })
 })
 //用户登录操作
@@ -148,27 +147,27 @@ router.post("/updateMore",(req,res,next)=>{
 })
 //普通用户获取个人信息
 router.get("/getUserInfo",auth , async(req,res,next)=>{
-   try {
-       let {page =1 ,pageSize=3} = req.query
-       page=parseInt(page)
-       pageSize = parseInt(pageSize)
+    try {
+        let {page =1 ,pageSize=10} = req.query
+        page=parseInt(page)
+        pageSize = parseInt(pageSize)
         
-       const count = await userModel.count()
-       const dataList = await userModel.find().skip((page-1)*pageSize)
-       .limit(pageSize).sort({_id:-1}).select("-password")
-       res.json({
-           code :200,
-           data:dataList,
-           msg:"获取管理员成功",
-           count
-       })
-   } catch (error) {
-       next(error)
-   }
-})
+        const count = await userModel.count()
+        const dataList = await userModel.find().skip((page-1)*pageSize)
+        .limit(pageSize).sort({_id:-1}).select("-password")
+        res.json({
+            code :200,
+            data:dataList,
+            msg:"获取管理员成功",
+            count
+        })
+    } catch (error) {
+        next(error)
+    }
+    })
 
 router.post("/delete/:id",auth,(req,res,next)=>{
-      const {id} = req.params;
+    const {id} = req.params;
     userModel.remove({_id: id}).then(data => {
         if (id) {
             res.json({
@@ -189,6 +188,5 @@ router.post("/delete/:id",auth,(req,res,next)=>{
         next(err)
     })
 })
-
 
 module.exports = router;

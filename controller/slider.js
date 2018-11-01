@@ -25,14 +25,13 @@ router.get("/get", async (req, res) => {
     page=parseInt(page)
     pageSize = parseInt(pageSize)
 
-    
-          const count= await sliderModel.count()
+        const count= await sliderModel.count()
        const sliderList = await sliderModel.find().limit(pageSize).skip((page - 1) * pageSize).sort({
-           sort: 1,
-           _id: -1
-       }).populate({
-           path: "url"
-       })
+            sort: 1,
+            _id: -1
+        }).populate({
+            path: "url"
+        })
             res.json({
                 data:sliderList,
                 code:200,
