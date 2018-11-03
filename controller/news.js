@@ -24,7 +24,10 @@ router.get("/get", async (req, res, next) => {
     page = parseInt(page);
     pageSize = parseInt(pageSize);
     const count = await newsModel.count()
-      const news = await newsModel.find().limit(pageSize).skip((page - 1) * pageSize).sort({
+    const news = await newsModel.find()
+        .limit(pageSize)
+        .skip((page - 1) * pageSize)
+        .sort({
                 _id: -1
             }).populate({
                 path: "author",
